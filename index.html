@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Céu da Laisla ✨</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+overflow:hidden;
+height:100vh;
+background:linear-gradient(to bottom,#020111,#0f3460);
+position:relative;
+}
+
+.star{
+position:absolute;
+font-size:28px;
+color:white;
+cursor:pointer;
+user-select:none;
+animation:piscar 2s infinite;
+transition:0.3s;
+}
+
+.star:hover{
+transform:scale(1.3);
+}
+
+@keyframes piscar{
+50%{
+opacity:0.3;
+}
+}
+
+#contador{
+position:fixed;
+top:20px;
+left:20px;
+color:white;
+font-size:20px;
+background:rgba(255,255,255,0.1);
+padding:10px 15px;
+border-radius:15px;
+backdrop-filter:blur(5px);
+}
+
+#mensagem{
+position:fixed;
+bottom:30px;
+left:50%;
+transform:translateX(-50%);
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(10px);
+padding:18px;
+border-radius:15px;
+color:white;
+font-size:18px;
+max-width:80%;
+text-align:center;
+display:none;
+}
+
+#final{
+display:none;
+position:absolute;
+width:100%;
+height:100%;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+#laisla{
+font-size:70px;
+font-weight:bold;
+letter-spacing:10px;
+text-shadow:0 0 20px white;
+animation:brilho 2s infinite;
+}
+
+@keyframes brilho{
+50%{
+text-shadow:0 0 40px white;
+}
+}
+
+#textoFinal{
+margin-top:25px;
+max-width:900px;
+font-size:20px;
+line-height:1.7;
+background:rgba(255,255,255,0.1);
+padding:25px;
+border-radius:20px;
+backdrop-filter:blur(8px);
+}
+
+#estrelaCadente{
+display:none;
+position:absolute;
+font-size:35px;
+color:white;
+top:80px;
+left:-100px;
+animation:cadente 2s linear forwards;
+}
+
+@keyframes cadente{
+0%{
+transform:translate(0,0);
+}
+100%{
+transform:translate(120vw,60vh);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="contador">
+⭐ 0 / 20 estrelas descobertas
+</div>
+
+<div id="mensagem"></div>
+
+<div id="estrelaCadente">☄️</div>
+
+<div id="final">
+
+<div id="laisla">
+L A I S L A
+</div>
+
+<div id="textoFinal">
+
+<p>
+Entre todas as estrelas do céu, você continua sendo a que mais brilha. 🌻✨
+</p>
+
+<br>
+
+<p>
+Eu sou grato por tudo o que você faz por mim, seja pelas nossas conversas ou pelos momentos em que eu posso confiar em você para te contar as minhas loucuras.
+</p>
+
+<br>
+
+<p>
+E me desculpa por qualquer coisa.
+Acho que, aos poucos, você me ajudou a ser uma pessoa menos orgulhosa.
+</p>
+
+<br>
+
+<p>
+Eu ODEIO pedir desculpas, então isso significa bastante. 💙
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+const mensagens = [
+
+"Seu sorriso ilumina mais que qualquer estrela ✨",
+"Você é uma pessoa incrível 🌻",
+"Obrigado por existir 💙",
+"Você torna os dias melhores ☀️",
+"Continue brilhando sempre ⭐",
+"Você merece coisas maravilhosas 🌙",
+"Seu jeito é especial ✨",
+"Você é única 🌻",
+"Obrigado por melhorar meus dias 💛",
+"Eu te admiro muito ✨",
+"Seu coração é lindo 🌷",
+"Você faz diferença na vida das pessoas 🌟",
+"Sua presença deixa tudo melhor 💙",
+"Você inspira mais do que imagina 🌻",
+"Você merece realizar seus sonhos ✨",
+"Sua luz é especial ⭐",
+"Obrigado pelos momentos bons 🌙",
+"Você tem um brilho único 🌟",
+"Você não imagina o quanto algumas conversas nossas melhoraram meus dias 💙",
+"Obrigado por sempre me ouvir, até nas minhas loucuras ✨"
+
+];
+
+let encontradas = 0;
+
+const caixa = document.getElementById("mensagem");
+const contador = document.getElementById("contador");
+
+for(let i=0;i<20;i++){
+
+let estrela = document.createElement("div");
+
+estrela.className="star";
+estrela.innerHTML="★";
+
+estrela.style.left=(Math.random()*90)+"vw";
+estrela.style.top=(Math.random()*85)+"vh";
+
+estrela.onclick=function(){
+
+if(estrela.dataset.clicada) return;
+
+estrela.dataset.clicada=true;
+
+estrela.style.color="#FFD700";
+
+caixa.innerHTML=mensagens[i];
+caixa.style.display="block";
+
+setTimeout(()=>{
+caixa.style.display="none";
+},3500);
+
+encontradas++;
+
+contador.innerHTML=
+`⭐ ${encontradas} / 20 estrelas descobertas`;
+
+if(encontradas===20){
+
+const cadente =
+document.getElementById("estrelaCadente");
+
+cadente.style.display="block";
+
+setTimeout(()=>{
+
+document.querySelectorAll(".star")
+.forEach(e=>e.remove());
+
+contador.style.display="none";
+caixa.style.display="none";
+
+document.getElementById("final")
+.style.display="flex";
+
+},2500);
+
+}
+
+}
+
+document.body.appendChild(estrela);
+
+}
+
+</script>
+
+</body>
+  </html>
